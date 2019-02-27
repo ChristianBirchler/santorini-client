@@ -57,6 +57,10 @@ const ButtonContainer = styled.div`
   margin-top: 20px;
 `;
 
+
+
+
+
 /**
  * Classes in React allow you to have an internal state within the class and to have the React life-cycle for your component.
  * You should have a class (instead of a functional component) when:
@@ -111,6 +115,19 @@ class Login extends React.Component {
         }
       });
   }
+
+
+
+  /*
+  Function when the register button is pressed.
+  */
+  register(){
+    this.props.history.push("/register");
+  }
+
+
+
+
 
   /**
    *  Every time the user enters something in the input field, the state gets updated.
@@ -172,7 +189,7 @@ class Login extends React.Component {
 
             <ButtonContainer>
 
-              <Button width={"50%"}>Register</Button>
+              <Button width={"50%"} onClick={() => {this.register();}}>Register</Button>
 
             </ButtonContainer>
 
