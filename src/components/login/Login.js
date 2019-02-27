@@ -5,6 +5,7 @@ import { getDomain } from "../../helpers/getDomain";
 import User from "../shared/models/User";
 import { withRouter } from "react-router-dom";
 import { Button } from "../../views/design/Button";
+import Header from "../../views/Header";
 
 const FormContainer = styled.div`
   margin-top: 2em;
@@ -134,6 +135,10 @@ class Login extends React.Component {
   render() {
     return (
       <BaseContainer>
+
+        <Header/>
+
+
         <FormContainer>
           <Form>
             <Label>Username</Label>
@@ -160,7 +165,17 @@ class Login extends React.Component {
               >
                 Login
               </Button>
+
+
             </ButtonContainer>
+
+
+            <ButtonContainer>
+
+              <Button width={"50%"}>Register</Button>
+
+            </ButtonContainer>
+
           </Form>
         </FormContainer>
       </BaseContainer>
