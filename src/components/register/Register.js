@@ -4,6 +4,7 @@ import {BaseContainer} from "../../helpers/layout";
 import {Button} from "../../views/design/Button";
 import Header from "../../views/Header";
 import styled from "styled-components";
+import Redirect from "react-router-dom/es/Redirect";
 
 
 
@@ -22,7 +23,7 @@ const Form = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 60%;
-  height: 375px;
+  height: 420px;
   font-size: 16px;
   font-weight: 300;
   padding-left: 37px;
@@ -64,10 +65,41 @@ const ButtonContainer = styled.div`
 
 class Register extends Component{
 
+    constructor(){
+        super();
+        this.state = {
+            name: null,
+            username: null,
+            password: null,
+            toLogin: false
+        };
+
+        this.toLogin = this.toLogin.bind(this)
+    }
+
+
+
+    handleInputChange(key, value) {
+        this.setState({ [key]: value });
+    }
+
+
+    toLogin(){
+       this.setState({toLogin: true})
+    }
+
+
 
     render() {
 
+        if(this.state.toLogin === true){
+            return <Redirect to={"/login"} />
+        }
+
+
+
         return(
+
 
             <BaseContainer>
 
@@ -76,13 +108,7 @@ class Register extends Component{
 
                 <FormContainer>
                     <Form>
-                        <Label>Username</Label>
-                        <InputField
-                            placeholder="Enter here.."
-                            onChange={e => {
-                                this.handleInputChange("username", e.target.value);
-                            }}
-                        />
+
                         <Label>Name</Label>
                         <InputField
                             placeholder="Enter here.."
@@ -93,11 +119,40 @@ class Register extends Component{
 
 
 
+                        <Label>Username</Label>
+                        <InputField
+                            placeholder="Enter here.."
+                            onChange={e => {
+                                this.handleInputChange("username", e.target.value);
+                            }}
+                        />
+
+
+                        <Label>Password</Label>
+                        <InputField
+                            placeholder={"Enter here.."}
+                            onChange={e => {this.handleInputChange("password", e.target.value)}}
+                        />
+
+
+
+
                         <ButtonContainer>
 
-                            <Button width={"50%"}>Register</Button>
+                            <Button
+                                width={"50%"}
+                                disabled={!this.state.username || !this.state.name || !this.state.password}
+                            >Register</Button>
 
                         </ButtonContainer>
+
+                        <ButtonContainer>
+                            <Button
+                                width={"50%"}
+                                onClick={this.toLogin}
+                            >Back to Login</Button>
+                        </ButtonContainer>
+
 
                     </Form>
                 </FormContainer>

@@ -6,6 +6,7 @@ import User from "../shared/models/User";
 import { withRouter } from "react-router-dom";
 import { Button } from "../../views/design/Button";
 import Header from "../../views/Header";
+import Redirect from "react-router-dom/es/Redirect";
 
 const FormContainer = styled.div`
   margin-top: 2em;
@@ -21,7 +22,7 @@ const Form = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 60%;
-  height: 375px;
+  height: 420px;
   font-size: 16px;
   font-weight: 300;
   padding-left: 37px;
@@ -80,9 +81,15 @@ class Login extends React.Component {
   constructor() {
     super();
     this.state = {
+      toRegister: false,
+      toGame: false,
       name: null,
-      username: null
+      username: null,
+      password: null
     };
+
+    this.toRegister = this.toRegister.bind(this);
+    this.toGame = this.toGame.bind(this);
   }
   /**
    * HTTP POST request is sent to the backend.
@@ -105,7 +112,16 @@ class Login extends React.Component {
         // store the token into the local storage
         localStorage.setItem("token", user.token);
         // user login successfully worked --> navigate to the route /game in the GameRouter
-        this.props.history.push(`/game`);
+
+
+        this.toGame();
+
+
+       // this.props.history.push(`/game`);
+
+
+
+
       })
       .catch(err => {
         if (err.message.match(/Failed to fetch/)) {
@@ -121,11 +137,14 @@ class Login extends React.Component {
   /*
   Function when the register button is pressed.
   */
-  register(){
-    this.props.history.push("/register");
+  toRegister(){
+    this.setState({toRegister: true});
   }
 
 
+  toGame(){
+    this.setState({toGame: true});
+  }
 
 
 
@@ -140,16 +159,21 @@ class Login extends React.Component {
     this.setState({ [key]: value });
   }
 
-  /**
-   * componentDidMount() is invoked immediately after a component is mounted (inserted into the tree).
-   * Initialization that requires DOM nodes should go here.
-   * If you need to load data from a remote endpoint, this is a good place to instantiate the network request.
-   * You may call setState() immediately in componentDidMount().
-   * It will trigger an extra rendering, but it will happen before the browser updates the screen.
-   */
+
   componentDidMount() {}
 
   render() {
+
+    if(this.state.toGame === true){
+      return <Redirect to={"/game"} />
+    }
+
+    // if register button was pressed
+    if(this.state.toRegister === true){
+      return(<Redirect to={"/register"} />);
+    }
+
+
     return (
       <BaseContainer>
 
@@ -158,6 +182,17 @@ class Login extends React.Component {
 
         <FormContainer>
           <Form>
+
+            <Label>Name</Label>
+            <InputField
+                placeholder="Enter here.."
+                onChange={e => {
+                  this.handleInputChange("name", e.target.value);
+                }}
+            />
+
+
+
             <Label>Username</Label>
             <InputField
               placeholder="Enter here.."
@@ -165,13 +200,18 @@ class Login extends React.Component {
                 this.handleInputChange("username", e.target.value);
               }}
             />
-            <Label>Name</Label>
+
+
+            <Label>Password</Label>
             <InputField
-              placeholder="Enter here.."
-              onChange={e => {
-                this.handleInputChange("name", e.target.value);
-              }}
+                placeholder="Enter here.."
+                onChange={e => {
+                  this.handleInputChange("password", e.target.value);
+                }}
             />
+
+
+
             <ButtonContainer>
               <Button
                 disabled={!this.state.username || !this.state.name}
@@ -189,7 +229,7 @@ class Login extends React.Component {
 
             <ButtonContainer>
 
-              <Button width={"50%"} onClick={() => {this.register();}}>Register</Button>
+              <Button width={"50%"} onClick={this.toRegister} >To Register</Button>
 
             </ButtonContainer>
 
