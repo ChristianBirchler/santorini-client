@@ -5,6 +5,7 @@ import {Button} from "../../views/design/Button";
 import Header from "../../views/Header";
 import styled from "styled-components";
 import Redirect from "react-router-dom/es/Redirect";
+import {getDomain} from "../../helpers/getDomain";
 
 
 
@@ -74,7 +75,8 @@ class Register extends Component{
             toLogin: false
         };
 
-        this.toLogin = this.toLogin.bind(this)
+        this.toLogin = this.toLogin.bind(this);
+        this.register = this.register.bind(this);
     }
 
 
@@ -86,6 +88,24 @@ class Register extends Component{
 
     toLogin(){
        this.setState({toLogin: true})
+    }
+
+    register(){
+
+        fetch(`${getDomain()}/users`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password
+            })
+        }).then(resp => (resp.json()));
+
+
+
+
     }
 
 
@@ -142,6 +162,7 @@ class Register extends Component{
                             <Button
                                 width={"50%"}
                                 disabled={!this.state.username || !this.state.name || !this.state.password}
+                                onClick={this.register}
                             >Register</Button>
 
                         </ButtonContainer>
