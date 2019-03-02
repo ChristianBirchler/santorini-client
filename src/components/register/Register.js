@@ -61,6 +61,17 @@ const ButtonContainer = styled.div`
 `;
 
 
+/**
+ * @return {null}
+ */
+function Error(props) {
+
+    if (props.err === true) {
+        return <h4>Username already occupied!</h4>;
+    }
+    return null;
+}
+
 
 
 
@@ -72,7 +83,8 @@ class Register extends Component{
             name: null,
             username: null,
             password: null,
-            toLogin: false
+            toLogin: false,
+            showError: false
         };
 
         this.toLogin = this.toLogin.bind(this);
@@ -129,13 +141,7 @@ class Register extends Component{
                 <FormContainer>
                     <Form>
 
-                        <Label>Name</Label>
-                        <InputField
-                            placeholder="Enter here.."
-                            onChange={e => {
-                                this.handleInputChange("name", e.target.value);
-                            }}
-                        />
+                        <Error err={this.state.showError} />
 
 
 
@@ -161,7 +167,7 @@ class Register extends Component{
 
                             <Button
                                 width={"50%"}
-                                disabled={!this.state.username || !this.state.name || !this.state.password}
+                                disabled={!this.state.username || !this.state.password}
                                 onClick={this.register}
                             >Register</Button>
 
