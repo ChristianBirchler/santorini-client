@@ -6,6 +6,7 @@ import Player from "../../views/Player";
 import { Spinner } from "../../views/design/Spinner";
 import { Button } from "../../views/design/Button";
 import { withRouter } from "react-router-dom";
+import Redirect from "react-router-dom/es/Redirect";
 
 const Container = styled(BaseContainer)`
   color: white;
@@ -28,9 +29,18 @@ class Game extends React.Component {
   constructor() {
     super();
     this.state = {
-      users: null
+        users: null,
+        toUser: null
     };
+
+    this.toUserPage = this.toUserPage.bind(this);
+
   }
+
+  toUserPage(user){
+    this.setState({toUser: user});
+  }
+
 
   logout() {
     localStorage.removeItem("token");
@@ -60,6 +70,13 @@ class Game extends React.Component {
   }
 
   render() {
+
+      if (this.state.toUser !== null){
+          return <Redirect to={"/game/user"} />;
+      }
+
+
+
     return (
       <Container>
         <h2>Happy Coding! </h2>
@@ -71,7 +88,7 @@ class Game extends React.Component {
             <Users>
               {this.state.users.map(user => {
                 return (
-                  <PlayerContainer key={user.id}>
+                  <PlayerContainer key={user.id} onClick={() => {this.toUserPage(user);}}>
                     <Player user={user} />
                   </PlayerContainer>
                 );

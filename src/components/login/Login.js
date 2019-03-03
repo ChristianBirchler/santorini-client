@@ -73,6 +73,14 @@ function Error(props) {
 
 
 
+class Token {
+  constructor(data = {}){
+    this.token = null;
+    Object.assign(this, data);
+  }
+}
+
+
 
 
 
@@ -119,20 +127,26 @@ class Login extends React.Component {
         username: this.state.username,
         password: this.state.password
       })
-    }).then(response => {
-      
-      if (response.status === 204){
-        this.toGame();
-      }else if (response.status === 404) {
-        this.setState({showError: true});
-      }
-      
     })
+    .then(response => {
+      if (response.status === 200){
 
+        this.toGame();
 
+      }else if (response.status === 404) {
 
+        this.setState({showError: true});
 
+      }
+      return response.json();
+    })
+    .then( json => {
 
+      const token = new Token(json);
+
+      localStorage.setItem("token", token.token);
+
+    })
 
     .catch(err => {
         if (err.message.match(/Failed to fetch/)) {

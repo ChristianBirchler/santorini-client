@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import {Button} from "./design/Button";
 
 const Container = styled.div`
   margin: 6px 0;
@@ -35,11 +36,13 @@ const Id = styled.div`
  * https://reactjs.org/docs/components-and-props.html
  * @FunctionalComponent
  */
-const Player = ({ user }) => {
+const Player = (props) => {
   return (
     <Container>
-      <Name>{user.name}</Name> <UserName>{user.username}</UserName>
-      <Id>Id: {user.id}</Id>
+
+     <UserName>{props.user.username}</UserName>
+      <Id>Id: {props.user.id}</Id>
+
     </Container>
   );
 };
