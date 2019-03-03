@@ -7,6 +7,7 @@ import { Spinner } from "../../views/design/Spinner";
 import { Button } from "../../views/design/Button";
 import { withRouter } from "react-router-dom";
 import Redirect from "react-router-dom/es/Redirect";
+import UserProfile from "./UserProfile";
 
 const Container = styled(BaseContainer)`
   color: white;
@@ -72,7 +73,7 @@ class Game extends React.Component {
   render() {
 
       if (this.state.toUser !== null){
-          return <Redirect to={"/game/user"} />;
+          return <UserProfile user={this.state.toUser} />;
       }
 
 
