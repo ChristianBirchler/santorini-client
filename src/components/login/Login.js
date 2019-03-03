@@ -58,6 +58,21 @@ const ButtonContainer = styled.div`
 `;
 
 
+/**
+ * @return {null}
+ */
+function Error(props) {
+
+  if (props.err === true){
+    return <h3>Wrong credentials</h3>;
+  }
+
+  return null;
+
+}
+
+
+
 
 
 
@@ -82,9 +97,9 @@ class Login extends React.Component {
     this.state = {
       toRegister: false,
       toGame: false,
-      name: null,
       username: null,
-      password: null
+      password: null,
+      showError: false
     };
 
     this.toRegister = this.toRegister.bind(this);
@@ -95,16 +110,31 @@ class Login extends React.Component {
    * If the request is successful, a new user is returned to the front-end and its token is stored in the localStorage.
    */
   login() {
-    fetch(`${getDomain()}/users`, {
+    fetch(`${getDomain()}/users/credentials`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
         username: this.state.username,
-        name: this.state.name
+        password: this.state.password
       })
-    }).catch(err => {
+    }).then(response => {
+      
+      if (response.status === 204){
+        this.toGame();
+      }else if (response.status === 404) {
+        this.setState({showError: true});
+      }
+      
+    })
+
+
+
+
+
+
+    .catch(err => {
         if (err.message.match(/Failed to fetch/)) {
           alert("The server cannot be reached. Did you start it?");
         } else {
@@ -146,7 +176,7 @@ class Login extends React.Component {
   render() {
 
     if(this.state.toGame === true){
-      return <Redirect to={"/game"} />
+      return <Redirect to={"/game"} />;
     }
 
     // if register button was pressed
@@ -164,14 +194,7 @@ class Login extends React.Component {
         <FormContainer>
           <Form>
 
-            <Label>Name</Label>
-            <InputField
-                placeholder="Enter here.."
-                onChange={e => {
-                  this.handleInputChange("name", e.target.value);
-                }}
-            />
-
+            <Error err={this.state.showError} />
 
 
             <Label>Username</Label>
@@ -195,7 +218,7 @@ class Login extends React.Component {
 
             <ButtonContainer>
               <Button
-                disabled={!this.state.username || !this.state.name}
+                disabled={!this.state.username || !this.state.password}
                 width="50%"
                 onClick={() => {
                   this.login();
