@@ -113,7 +113,20 @@ class Register extends Component{
                 username: this.state.username,
                 password: this.state.password
             })
-        }).then(resp => (resp.json()));
+        }).then( response => {
+            if (response.status === 201){
+                this.setState({toLogin: true});
+            } else if (response.status === 409){
+                this.setState({showError: true});
+            }
+        })
+       .catch(err => {
+                if (err.message.match(/Failed to fetch/)) {
+                    alert("The server cannot be reached. Did you start it?");
+                } else {
+                    alert(`Something went wrong during the registration: ${err.message}`);
+                }
+            });
 
 
 
@@ -140,6 +153,7 @@ class Register extends Component{
 
                 <FormContainer>
                     <Form>
+
 
                         <Error err={this.state.showError} />
 
