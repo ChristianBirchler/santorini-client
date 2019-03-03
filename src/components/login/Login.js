@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { BaseContainer } from "../../helpers/layout";
 import { getDomain } from "../../helpers/getDomain";
-import User from "../shared/models/User";
 import { withRouter } from "react-router-dom";
 import { Button } from "../../views/design/Button";
 import Header from "../../views/Header";
@@ -105,25 +104,7 @@ class Login extends React.Component {
         username: this.state.username,
         name: this.state.name
       })
-    })
-      .then(response => response.json())
-      .then(returnedUser => {
-        const user = new User(returnedUser);
-        // store the token into the local storage
-        localStorage.setItem("token", user.token);
-        // user login successfully worked --> navigate to the route /game in the GameRouter
-
-
-        this.toGame();
-
-
-       // this.props.history.push(`/game`);
-
-
-
-
-      })
-      .catch(err => {
+    }).catch(err => {
         if (err.message.match(/Failed to fetch/)) {
           alert("The server cannot be reached. Did you start it?");
         } else {
