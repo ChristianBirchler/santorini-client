@@ -38,6 +38,7 @@ const Label = styled.label`
 `;
 
 const Users = styled.ul`
+  color: white;
   list-style: none;
   padding-left: 0;
 `;
@@ -82,6 +83,7 @@ class UserProfile extends React.Component{
                     <Users>
                         Username
                     </Users>
+                        {this.props.user.username}
                     </PlayerContainer>
 
 
@@ -89,6 +91,9 @@ class UserProfile extends React.Component{
                     <Users>
                         Birthday
                     </Users>
+
+                    {this.props.user.birthday}
+
                 </PlayerContainer>
 
 
@@ -96,6 +101,9 @@ class UserProfile extends React.Component{
                     <Users>
                         Status
                     </Users>
+
+                    {this.props.user.status}
+
                 </PlayerContainer>
 
 
@@ -104,6 +112,9 @@ class UserProfile extends React.Component{
                     <Users>
                         Creation date
                     </Users>
+
+                    {this.props.user.creationDate}
+
                 </PlayerContainer>
 
 
