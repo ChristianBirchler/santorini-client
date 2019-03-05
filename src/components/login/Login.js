@@ -110,6 +110,8 @@ class Login extends React.Component {
       showError: false
     };
 
+    this.statusOk = false;
+
     this.toRegister = this.toRegister.bind(this);
     this.toGame = this.toGame.bind(this);
   }
@@ -131,7 +133,7 @@ class Login extends React.Component {
     .then(response => {
       if (response.status === 200){
 
-        this.toGame();
+        this.statusOk = true;
 
       }else if (response.status === 404) {
 
@@ -144,7 +146,11 @@ class Login extends React.Component {
 
       const token = new Token(json);
 
-      localStorage.setItem("token", token.token);
+      if(token.token !== null && this.statusOk) {
+
+        localStorage.setItem("token", token.token);
+        this.toGame();
+      }
 
     })
 
@@ -155,6 +161,9 @@ class Login extends React.Component {
           alert(`Something went wrong during the login: ${err.message}`);
         }
       });
+
+
+
   }
 
 
