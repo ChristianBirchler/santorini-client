@@ -6,7 +6,6 @@ import Player from "../../views/Player";
 import { Spinner } from "../../views/design/Spinner";
 import { Button } from "../../views/design/Button";
 import { withRouter } from "react-router-dom";
-import Redirect from "react-router-dom/es/Redirect";
 import UserProfile from "./UserProfile";
 
 const Container = styled(BaseContainer)`
