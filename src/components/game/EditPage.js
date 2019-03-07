@@ -77,6 +77,11 @@ function Error(props) {
 
 class EditPage extends React.Component{
 
+    /*
+    props: user
+     */
+
+
     constructor(props) {
         super(props);
         this.state = {
