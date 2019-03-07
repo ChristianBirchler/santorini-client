@@ -4,10 +4,15 @@ import {Button} from "../../views/design/Button";
 import Header from "../../views/Header";
 import styled from "styled-components";
 import {BaseContainer} from "../../helpers/layout";
+import EditPage from "./EditPage";
 
 
 
-
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
 
 const Label = styled.label`
   color: white;
@@ -30,12 +35,25 @@ const PlayerContainer = styled.li`
 
 
 
+const EditGuard = props => {
+    if (localStorage.getItem("token") === props.token) {
+        return props.children;
+    }else{
+        return <div></div>;
+    }
+};
+
+
+
+
+
 class UserProfile extends React.Component{
 
     constructor(props) {
         super(props);
         this.state = {
-            back: false
+            back: false,
+            edit: false
         };
     }
 
@@ -47,6 +65,11 @@ class UserProfile extends React.Component{
         if (localStorage.getItem("token") === null || this.state.back ===true){
             return <Redirect to={"/game"} />;
         }
+
+        if (this.state.edit === true){
+            return <EditPage />
+        }
+
 
         return(
             <BaseContainer>
@@ -96,10 +119,19 @@ class UserProfile extends React.Component{
                 </PlayerContainer>
 
 
+                <EditGuard token={this.props.user.token}>
+                <ButtonContainer>
+                <Button width={"100%"} onClick={() => this.setState({edit: true})}>Edit</Button>
+                </ButtonContainer>
+                </EditGuard>
+
+                <ButtonContainer>
 
                     <Button width="100%" onClick={() => {this.setState({back: true})}} >
                         Back
                     </Button>
+
+                </ButtonContainer>
 
 
 
