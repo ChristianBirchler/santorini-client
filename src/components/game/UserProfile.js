@@ -67,7 +67,7 @@ class UserProfile extends React.Component{
         }
 
         if (this.state.edit === true){
-            return <EditPage />
+            return <EditPage user={this.props.toUser}/>
         }
 
 
