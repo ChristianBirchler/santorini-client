@@ -2,6 +2,8 @@ import * as React from "react";
 import {BaseContainer} from "../../helpers/layout";
 import {Button} from "../../views/design/Button";
 import styled from "styled-components";
+import {getDomain} from "../../helpers/getDomain";
+import UserProfile from "./UserProfile";
 
 
 const FormContainer = styled.div`
