@@ -5,6 +5,7 @@ import Header from "../../views/Header";
 import styled from "styled-components";
 import {BaseContainer} from "../../helpers/layout";
 import EditPage from "./EditPage";
+import {getDomain} from "../../helpers/getDomain";
 
 
 
@@ -67,7 +68,7 @@ class UserProfile extends React.Component{
         }
 
         if (this.state.edit === true){
-            return <EditPage user={this.props.toUser}/>
+            return <EditPage user={this.props.user}/>
         }
 
 

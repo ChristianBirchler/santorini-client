@@ -91,8 +91,10 @@ class EditPage extends React.Component{
             newBirthdayDD: null,
             newBirthdayMM: null,
             newBirthdayYYYY: null,
-            newPassword: null
-        };
+            newPassword: null,
+            isUpdated: false,
+            updatedUser: this.props.user
+        }
 
     }
 
@@ -104,11 +106,81 @@ class EditPage extends React.Component{
 
     updateProfile(){
 
+        let  birthdate = null;
+
+        if (this.state.newBirthdayDD !== null && this.state.newBirthdayMM !== null && this.state.newBirthdayYYYY !== null){
+            let YYYY = this.state.newBirthdayYYYY.toString(10);
+            let MM = this.state.newBirthdayMM.toString(10);
+            let DD = this.state.newBirthdayDD.toString(10);
+
+            birthdate = YYYY+"-"+MM+"-"+DD;
+        }
+
+
+        let id = this.props.user.id;
+        console.log(id);
+
+        fetch(`${getDomain()}/users/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: this.state.newUsername,
+                birthday: birthdate,
+                password: this.state.newPassword
+            })
+        })
+            .then(response => {
+                if (response.status === 204){
+                    this.setState({isUpdated: true});
+                }
+            })
+            .catch(error => alert(error.message))
+
+
+    }
+
+    getUpdatedUser(){
+
+        fetch(`${getDomain()}/users/${this.props.user.id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }})
+            .then(response => {
+                if (response.status === 200){
+                    return response.json();
+                }
+            })
+            .then(json => {
+                this.setState({updatedUser: json});
+            })
+            .catch(error => alert(error.message))
+
+
     }
 
 
-
     render() {
+
+        if (this.state.isUpdated){
+
+            this.getUpdatedUser();
+
+            let token = this.props.user.token;
+            let loggedIn = this.state.updatedUser.loggedIn;
+
+            let obj = this.state.updatedUser;
+
+            obj["status"] = loggedIn;
+            obj["token"] = token;
+
+            console.log(obj.status);
+
+            return <UserProfile user={obj}/>
+        }
+
         return(
             <BaseContainer>
 
