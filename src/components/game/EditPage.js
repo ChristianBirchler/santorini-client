@@ -173,7 +173,14 @@ class EditPage extends React.Component{
 
             let obj = this.state.updatedUser;
 
-            obj["status"] = loggedIn;
+
+            if (loggedIn){
+                obj.status = "ONLINE";
+            } else {
+                obj.status = "OFLINE";
+            }
+
+
             obj["token"] = token;
 
             console.log(obj.status);
