@@ -64,8 +64,8 @@ const ButtonContainer = styled.div`
  */
 function Error(props) {
 
-    if (props.err === true){
-        return <h3>Wrong credentials</h3>;
+    if (props.isError === true){
+        return <h3>Username already occupied!</h3>;
     }
 
     return null;
@@ -87,6 +87,7 @@ class EditPage extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+            isError: false,
             back: false,
             newUsername: null,
             newBirthdayDD: null,
@@ -135,6 +136,8 @@ class EditPage extends React.Component{
             .then(response => {
                 if (response.status === 204){
                     this.setState({isUpdated: true});
+                } else {
+                    this.setState({isError: true});
                 }
             })
             .catch(error => alert(error.message))
@@ -200,6 +203,9 @@ class EditPage extends React.Component{
 
                 <FormContainer>
                     <Form>
+
+
+                        <Error isError={this.state.isError}/>
 
 
                         <Label>Username</Label>
