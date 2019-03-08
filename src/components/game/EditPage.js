@@ -177,7 +177,7 @@ class EditPage extends React.Component{
             if (loggedIn){
                 obj.status = "ONLINE";
             } else {
-                obj.status = "OFLINE";
+                obj.status = "OFFLINE";
             }
 
 
