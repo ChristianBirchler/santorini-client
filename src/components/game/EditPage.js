@@ -87,6 +87,7 @@ class EditPage extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
+            back: false,
             newUsername: null,
             newBirthdayDD: null,
             newBirthdayMM: null,
@@ -164,6 +165,10 @@ class EditPage extends React.Component{
 
     render() {
 
+        if (this.state.back){
+            return <UserProfile user={this.props.user} />
+        }
+
         if (this.state.isUpdated){
 
             this.getUpdatedUser();
@@ -185,7 +190,7 @@ class EditPage extends React.Component{
 
             console.log(obj.status);
 
-            return <UserProfile user={obj}/>
+            return <UserProfile user={obj}/>;
         }
 
         return(
@@ -229,6 +234,19 @@ class EditPage extends React.Component{
 
                             >
                                 Update
+                            </Button>
+
+
+                        </ButtonContainer>
+
+
+                        <ButtonContainer>
+                            <Button
+                                onClick={() => this.setState({back: true})}
+                                width="100%"
+
+                            >
+                                Back
                             </Button>
 
 
