@@ -174,6 +174,7 @@ class EditPage extends React.Component{
 
         if (this.state.isUpdated){
 
+            // create new user json such that the profile page shows the updated user
             this.getUpdatedUser();
 
             let token = this.props.user.token;

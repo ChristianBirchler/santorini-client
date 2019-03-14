@@ -37,6 +37,7 @@ class Game extends React.Component {
 
   }
 
+  // change state if client has clicked on a user
   toUserPage(user){
     this.setState({toUser: user});
   }

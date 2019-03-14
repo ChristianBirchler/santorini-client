@@ -175,7 +175,7 @@ class Login extends React.Component {
     this.setState({toRegister: true});
   }
 
-
+  // function is called if login is successful
   toGame(){
     this.setState({toGame: true});
   }

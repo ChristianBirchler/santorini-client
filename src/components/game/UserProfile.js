@@ -42,7 +42,7 @@ const Value = styled.div`
 
 
 
-
+// decides if edit button should be displayed or not
 const EditGuard = props => {
     if (localStorage.getItem("token") === props.token) {
         return props.children;
@@ -74,6 +74,7 @@ class UserProfile extends React.Component{
             return <Redirect to={"/game"} />;
         }
 
+        // redirect to edit page iff edit button is pressed
         if (this.state.edit === true){
             return <EditPage user={this.props.user}/>
         }
