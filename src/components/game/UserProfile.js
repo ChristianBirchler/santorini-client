@@ -21,18 +21,25 @@ const Label = styled.label`
   text-transform: uppercase;
 `;
 
-const Users = styled.ul`
-  color: white;
-  list-style: none;
-  padding-left: 0;
+
+
+const EntryContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
-const PlayerContainer = styled.li`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+const Property = styled.div`
+    color: white;
 `;
+
+const Value = styled.div`
+    color: #42f4e8;
+    font-size: 35px;
+`;
+
+
+
 
 
 
@@ -81,43 +88,47 @@ class UserProfile extends React.Component{
                     <Label>Profile page</Label>
 
 
-                    <PlayerContainer>
-                    <Users>
+                    <EntryContainer>
+                    <Property>
                         Username
-                    </Users>
+                    </Property>
+
+                        <Value>
                         {this.props.user.username}
-                    </PlayerContainer>
+                        </Value>
+                    </EntryContainer>
 
 
-                <PlayerContainer>
-                    <Users>
+                <EntryContainer>
+                    <Property>
                         Birthday
-                    </Users>
+                    </Property>
 
+                    <Value>
                     {this.props.user.birthday}
+                    </Value>
+                </EntryContainer>
 
-                </PlayerContainer>
 
-
-                <PlayerContainer>
-                    <Users>
+                <EntryContainer>
+                    <Property>
                         Status
-                    </Users>
-
+                    </Property>
+                    <Value>
                     {this.props.user.status}
+                    </Value>
+                </EntryContainer>
 
-                </PlayerContainer>
 
 
-
-                <PlayerContainer>
-                    <Users>
+                <EntryContainer>
+                    <Property>
                         Creation date
-                    </Users>
-
+                    </Property>
+                    <Value>
                     {this.props.user.creationDate}
-
-                </PlayerContainer>
+                    </Value>
+                </EntryContainer>
 
 
                 <EditGuard token={this.props.user.token}>
